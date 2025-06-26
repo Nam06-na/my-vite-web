@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(210, 11%, 15%);
+  --muted: hsl(210, 40%, 98%);
+  --muted-foreground: hsl(215, 13%, 65%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 11%, 15%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(210, 11%, 15%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(210, 11%, 15%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(204, 86%, 53%);
+  --secondary-foreground: hsl(213, 100%, 99%);
+  --accent: hsl(360, 83%, 62%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --success: hsl(142, 71%, 45%);
+  --success-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(210, 11%, 15%);
+  --radius: 0.5rem;
+  --bg-soft: hsl(0, 0%, 98%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(0, 0%, 98%);
+  --primary-foreground: hsl(240, 10%, 3.9%);
+  --secondary: hsl(204, 86%, 53%);
+  --secondary-foreground: hsl(213, 100%, 99%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --success: hsl(142, 71%, 45%);
+  --success-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-sans {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .bg-soft {
+    background-color: var(--bg-soft);
+  }
+
+  .text-primary-custom {
+    color: hsl(210, 11%, 15%);
+  }
+
+  .text-secondary-custom {
+    color: hsl(204, 86%, 53%);
+  }
+
+  .text-accent-custom {
+    color: hsl(360, 83%, 62%);
+  }
+
+  .text-success-custom {
+    color: hsl(142, 71%, 45%);
+  }
+
+  .bg-primary-custom {
+    background-color: hsl(210, 11%, 15%);
+  }
+
+  .bg-secondary-custom {
+    background-color: hsl(204, 86%, 53%);
+  }
+
+  .bg-accent-custom {
+    background-color: hsl(360, 83%, 62%);
+  }
+
+  .bg-success-custom {
+    background-color: hsl(142, 71%, 45%);
+  }
+}
