@@ -110,6 +110,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Professional portfolio routes with trustworthy URLs
+  app.get("/api/portfolio/entries", async (req, res) => {
+    try {
+      const entries = await storage.getAllEntries();
+      res.json({
+        entries,
+        isPublic: true,
+        message: "Professional portfolio view"
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch portfolio entries" });
+    }
+  });
+
+  app.get("/api/timeline/entries", async (req, res) => {
+    try {
+      const entries = await storage.getAllEntries();
+      res.json({
+        entries,
+        isPublic: true,
+        message: "Professional timeline view"
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch timeline entries" });
+    }
+  });
+
   // Get single entry
   app.get("/api/entries/:id", async (req, res) => {
     try {

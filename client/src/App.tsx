@@ -13,6 +13,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/entry/:id" component={Entry} />
       <Route path="/public" component={PublicPage} />
+      <Route path="/portfolio" component={PublicPage} />
+      <Route path="/professional-timeline" component={PublicPage} />
     </Switch>
   );
 }

@@ -1,11 +1,52 @@
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import Timeline from "@/components/timeline";
-import { BookOpen, Eye } from "lucide-react";
+import { BookOpen, Eye, User, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function PublicPage() {
+  const [location] = useLocation();
+  
+  // Determine API endpoint and display content based on URL
+  const getApiEndpoint = () => {
+    if (location === "/portfolio") {
+      return "/api/portfolio/entries";
+    } else if (location === "/professional-timeline") {
+      return "/api/timeline/entries";
+    }
+    return "/api/public/entries";
+  };
+
+  const getPageConfig = () => {
+    if (location === "/portfolio") {
+      return {
+        title: "Professional Portfolio",
+        subtitle: "Showcasing achievements and career highlights",
+        description: "A comprehensive portfolio showcasing professional achievements, skills development, and career milestones",
+        badgeText: "Portfolio View",
+        badgeIcon: User
+      };
+    } else if (location === "/professional-timeline") {
+      return {
+        title: "Professional Timeline",
+        subtitle: "Career development and growth journey",
+        description: "A chronological view of professional growth, achievements, and career milestones over time",
+        badgeText: "Timeline View",
+        badgeIcon: Calendar
+      };
+    }
+    return {
+      title: "Professional Journey",
+      subtitle: "Professional Development Timeline",
+      description: "A collection of achievements, learnings, and milestones documenting professional growth and career development",
+      badgeText: "Public View",
+      badgeIcon: Eye
+    };
+  };
+
+  const config = getPageConfig();
   const { data: publicData, isLoading, error } = useQuery({
-    queryKey: ["/api/public/entries"],
+    queryKey: [getApiEndpoint()],
     retry: false,
   });
 
@@ -43,14 +84,14 @@ export default function PublicPage() {
               <BookOpen className="h-8 w-8 text-secondary-custom" />
               <div>
                 <h1 className="text-xl font-serif font-semibold text-primary-custom">MyJourney</h1>
-                <p className="text-xs text-gray-500">Professional Development Timeline</p>
+                <p className="text-xs text-gray-500">{config.subtitle}</p>
               </div>
             </div>
             
             <div className="flex items-center gap-2">
               <Badge variant="secondary" className="flex items-center gap-1">
-                <Eye className="w-3 h-3" />
-                Public View
+                <config.badgeIcon className="w-3 h-3" />
+                {config.badgeText}
               </Badge>
             </div>
           </div>
@@ -61,10 +102,10 @@ export default function PublicPage() {
       <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary-custom mb-6">
-            Professional Journey
+            {config.title}
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            A collection of achievements, learnings, and milestones documenting professional growth and career development.
+            {config.description}
           </p>
           <div className="mt-8 flex items-center justify-center gap-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">

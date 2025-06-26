@@ -105,21 +105,27 @@ The application now features a complete authentication system:
 3. **Session Management**: Express sessions with secure cookie handling
 4. **Authorization**: Middleware protection on all CRUD operations
 
-## Public Sharing System
+## Professional Sharing System
 
-The journal includes a comprehensive public sharing feature:
+The journal includes a comprehensive professional sharing system with multiple trustworthy URL options:
 
-- **Public URL**: `/public` route provides read-only access to the entire journal
-- **Share Button**: Available in navigation for easy URL copying
-- **Professional Design**: Public view designed for employer/portfolio sharing
-- **Read-Only Protection**: Public visitors cannot modify any content
+### Professional URLs Available
+- **Portfolio View**: `/portfolio` - Professional portfolio format, ideal for job applications
+- **Timeline View**: `/professional-timeline` - Career development timeline, perfect for performance reviews
+- **Public View**: `/public` - Standard public access to journal entries
+
+### Advanced Share Button Features
+- **Multiple URL Options**: Share modal offers three professional URL formats
+- **Smart Recommendations**: Portfolio and timeline URLs marked as recommended for employers
+- **Copy & Preview**: Easy copy-to-clipboard with preview functionality
+- **Professional Appearance**: URLs designed to look trustworthy when shared with employers
 
 ### Public Features
-- Clean, professional timeline layout
-- All journal entries visible
-- Portfolio-ready presentation
-- Mobile-responsive design
-- Clear "Public View" indicators
+- Clean, professional timeline layout with dynamic content based on URL
+- All journal entries visible in read-only format
+- Portfolio-ready presentation optimized for employer viewing
+- Mobile-responsive design across all professional URL formats
+- Context-aware page titles and descriptions for each URL type
 
 ## Changelog
 
