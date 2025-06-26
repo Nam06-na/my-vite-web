@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import type { Entry } from "@shared/schema";
 
 interface EntryCardProps {
@@ -18,6 +19,7 @@ export default function EntryCard({ entry, isLeft = false }: EntryCardProps) {
   const readingTime = getReadingTime(entry.content);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { isAuthenticated, isAdmin } = useAuth();
 
   const deleteEntryMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -63,15 +65,17 @@ export default function EntryCard({ entry, isLeft = false }: EntryCardProps) {
                   </Badge>
                   <span className="text-sm text-gray-500">{formatDate(entry.date)}</span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleDelete}
-                  disabled={deleteEntryMutation.isPending}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {isAuthenticated && isAdmin && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleDelete}
+                    disabled={deleteEntryMutation.isPending}
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
               
               {/* Image Display */}

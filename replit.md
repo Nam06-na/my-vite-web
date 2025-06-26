@@ -90,6 +90,37 @@ The application follows a modern full-stack architecture with clear separation b
 - **Start Command**: `npm run start`
 - **Environment**: Production NODE_ENV with optimized builds
 
+## Authentication & Access Control
+
+The application now features a complete authentication system:
+
+- **Admin Authentication**: Session-based login system with bcrypt password hashing
+- **Access Control**: Only authenticated admin users can create, edit, or delete entries
+- **Public Read Access**: All visitors can view the timeline and entries without authentication
+- **Protected Operations**: Entry creation, editing, and deletion require admin login
+
+### Authentication Flow
+1. **Setup**: Create admin account via `/api/auth/setup` endpoint
+2. **Login**: Authenticate via login modal in navigation
+3. **Session Management**: Express sessions with secure cookie handling
+4. **Authorization**: Middleware protection on all CRUD operations
+
+## Public Sharing System
+
+The journal includes a comprehensive public sharing feature:
+
+- **Public URL**: `/public` route provides read-only access to the entire journal
+- **Share Button**: Available in navigation for easy URL copying
+- **Professional Design**: Public view designed for employer/portfolio sharing
+- **Read-Only Protection**: Public visitors cannot modify any content
+
+### Public Features
+- Clean, professional timeline layout
+- All journal entries visible
+- Portfolio-ready presentation
+- Mobile-responsive design
+- Clear "Public View" indicators
+
 ## Changelog
 
 ```
@@ -98,6 +129,8 @@ Changelog:
 - June 26, 2025. Added image upload functionality for entries
 - June 26, 2025. Implemented removable timeline feature with delete buttons
 - June 26, 2025. Fixed navigation component and entry display with image support
+- June 26, 2025. Added authentication system with admin login and session management
+- June 26, 2025. Implemented public sharing with read-only URL for portfolio sharing
 ```
 
 ## User Preferences

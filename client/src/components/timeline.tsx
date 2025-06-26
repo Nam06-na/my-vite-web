@@ -3,12 +3,20 @@ import EntryCard from "./entry-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Entry } from "@shared/schema";
 
-export default function Timeline() {
-  const { data: entries, isLoading, error } = useQuery<Entry[]>({
+interface TimelineProps {
+  entries?: Entry[];
+  isPublic?: boolean;
+}
+
+export default function Timeline({ entries: providedEntries, isPublic = false }: TimelineProps) {
+  const { data: fetchedEntries, isLoading, error } = useQuery<Entry[]>({
     queryKey: ["/api/entries"],
+    enabled: !providedEntries, // Only fetch if entries not provided
   });
 
-  if (isLoading) {
+  const entries = providedEntries || fetchedEntries;
+
+  if (!providedEntries && isLoading) {
     return (
       <section className="py-16 bg-soft">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,7 +52,7 @@ export default function Timeline() {
     );
   }
 
-  if (error) {
+  if (!providedEntries && error) {
     return (
       <section className="py-16 bg-soft">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
