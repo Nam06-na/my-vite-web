@@ -37,19 +37,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new entry
   app.post("/api/entries", async (req, res) => {
     try {
-      const validatedData = insertEntrySchema.parse(req.body);
+      const data = req.body;
       
-      // Generate excerpt from content (first 150 characters + ...)
-      const excerpt = validatedData.content.length > 150 
-        ? validatedData.content.substring(0, 150) + "..."
-        : validatedData.content;
+      // Generate excerpt from content if not provided
+      const excerpt = data.excerpt || (data.content && data.content.length > 150 
+        ? data.content.substring(0, 150) + "..."
+        : data.content || "");
       
-      const entryData = {
-        ...validatedData,
+      const entryWithExcerpt = {
+        ...data,
         excerpt
       };
       
-      const entry = await storage.createEntry(entryData);
+      const validatedData = insertEntrySchema.parse(entryWithExcerpt);
+      const entry = await storage.createEntry(validatedData);
       res.status(201).json(entry);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -58,6 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           errors: error.errors 
         });
       }
+      console.error("Create entry error:", error);
       res.status(500).json({ message: "Failed to create entry" });
     }
   });

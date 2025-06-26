@@ -27,6 +27,9 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export const insertEntrySchema = createInsertSchema(entries).omit({
   id: true,
   createdAt: true,
+  excerpt: true,
+}).extend({
+  excerpt: z.string().optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

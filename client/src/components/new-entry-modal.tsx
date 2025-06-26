@@ -41,7 +41,6 @@ export default function NewEntryModal({ open, onClose }: NewEntryModalProps) {
       content: "",
       category: "",
       date: new Date().toISOString().split('T')[0],
-      excerpt: "",
       image: null
     },
   });
