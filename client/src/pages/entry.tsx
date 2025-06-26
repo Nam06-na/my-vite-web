@@ -92,6 +92,17 @@ export default function EntryPage() {
               {entry.title}
             </h1>
 
+            {/* Entry Image */}
+            {entry.image && (
+              <div className="mb-8">
+                <img
+                  src={entry.image}
+                  alt={entry.title}
+                  className="w-full max-h-96 object-cover rounded-lg border border-gray-200"
+                />
+              </div>
+            )}
+
             <div className="flex flex-wrap items-center gap-6 mb-8 text-gray-600">
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />

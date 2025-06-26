@@ -19,8 +19,8 @@ export default function Navigation({ onNewEntry }: NavigationProps) {
           </Link>
           
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/#timeline">
-              <a className="text-primary-custom hover:text-secondary-custom transition-colors font-medium">Timeline</a>
+            <Link href="/#timeline" className="text-primary-custom hover:text-secondary-custom transition-colors font-medium">
+              Timeline
             </Link>
             <a href="#about" className="text-primary-custom hover:text-secondary-custom transition-colors font-medium">About</a>
             <a href="#contact" className="text-primary-custom hover:text-secondary-custom transition-colors font-medium">Contact</a>

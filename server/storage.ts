@@ -35,28 +35,32 @@ export class MemStorage implements IStorage {
         content: "Successfully completed an intensive 6-month full-stack development program, mastering React, Node.js, and database management. This achievement marked a significant milestone in my transition to software development. The course covered everything from frontend frameworks to backend APIs, teaching me how to build complete web applications from scratch. I worked on several projects including an e-commerce platform and a social media dashboard, gaining hands-on experience with real-world development challenges.",
         excerpt: "Successfully completed an intensive 6-month full-stack development program, mastering React, Node.js, and database management. This achievement marked a significant milestone in my transition to software development...",
         category: "Achievement",
-        date: "2024-03-15"
+        date: "2024-03-15",
+        image: null
       },
       {
         title: "First Open Source Contribution Accepted",
         content: "My first meaningful contribution to an open source project was merged today! Contributing a performance optimization to a popular React component library. The experience taught me about collaborative coding and community engagement. I identified a performance bottleneck in the component rendering cycle and proposed a solution using React.memo and useMemo hooks. The maintainers were very welcoming and provided excellent feedback during the review process.",
         excerpt: "My first meaningful contribution to an open source project was merged today! Contributing a performance optimization to a popular React component library. The experience taught me about collaborative coding and community engagement...",
         category: "Career Milestone",
-        date: "2024-01-08"
+        date: "2024-01-08",
+        image: null
       },
       {
         title: "Attended First Tech Conference",
         content: "ReactConf 2023 was an incredible experience. Meeting fellow developers, learning about the latest React features, and networking with industry professionals opened my eyes to the broader tech community. I attended sessions on React Server Components, the new concurrent features, and best practices for building scalable applications. The networking opportunities were invaluable, and I made connections with developers from companies I admire.",
         excerpt: "ReactConf 2023 was an incredible experience. Meeting fellow developers, learning about the latest React features, and networking with industry professionals opened my eyes to the broader tech community...",
         category: "Learning Experience",
-        date: "2023-11-22"
+        date: "2023-11-22",
+        image: null
       },
       {
         title: "Launched My First Personal Project",
         content: "After months of planning and development, I finally launched my task management application. Built with React and Firebase, it represents my first complete full-stack project from conception to deployment. The app features real-time collaboration, drag-and-drop task organization, and user authentication. I learned so much about project management, user experience design, and deployment strategies during this journey.",
         excerpt: "After months of planning and development, I finally launched my task management application. Built with React and Firebase, it represents my first complete full-stack project from conception to deployment...",
         category: "Project Launch",
-        date: "2023-09-10"
+        date: "2023-09-10",
+        image: null
       }
     ];
 
@@ -64,6 +68,7 @@ export class MemStorage implements IStorage {
       const newEntry: Entry = {
         id: this.currentEntryId++,
         ...entry,
+        image: entry.image || null,
         createdAt: new Date()
       };
       this.entries.set(newEntry.id, newEntry);
@@ -102,6 +107,7 @@ export class MemStorage implements IStorage {
     const entry: Entry = {
       id,
       ...insertEntry,
+      image: insertEntry.image || null,
       createdAt: new Date()
     };
     this.entries.set(id, entry);

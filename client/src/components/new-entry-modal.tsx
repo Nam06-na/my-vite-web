@@ -11,7 +11,8 @@ import { insertEntrySchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
-import { Plus } from "lucide-react";
+import { Plus, Upload, X } from "lucide-react";
+import { useState, useRef } from "react";
 
 const formSchema = insertEntrySchema.extend({
   title: z.string().min(1, "Title is required"),
@@ -30,6 +31,8 @@ interface NewEntryModalProps {
 export default function NewEntryModal({ open, onClose }: NewEntryModalProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -38,9 +41,31 @@ export default function NewEntryModal({ open, onClose }: NewEntryModalProps) {
       content: "",
       category: "",
       date: new Date().toISOString().split('T')[0],
-      excerpt: ""
+      excerpt: "",
+      image: null
     },
   });
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setSelectedImage(result);
+        form.setValue("image", result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setSelectedImage(null);
+    form.setValue("image", null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const createEntryMutation = useMutation({
     mutationFn: async (data: FormData) => {
@@ -54,6 +79,7 @@ export default function NewEntryModal({ open, onClose }: NewEntryModalProps) {
         description: "Entry created successfully!",
       });
       form.reset();
+      setSelectedImage(null);
       onClose();
     },
     onError: () => {
@@ -136,6 +162,60 @@ export default function NewEntryModal({ open, onClose }: NewEntryModalProps) {
                       <SelectItem value="Personal Growth">Personal Growth</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Image Upload */}
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-primary-custom font-medium">Image (Optional)</FormLabel>
+                  <FormControl>
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                        >
+                          <Upload className="h-4 w-4 mr-2" />
+                          Browse Image
+                        </Button>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                        {selectedImage && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={removeImage}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <X className="h-4 w-4 mr-1" />
+                            Remove
+                          </Button>
+                        )}
+                      </div>
+                      {selectedImage && (
+                        <div className="relative">
+                          <img
+                            src={selectedImage}
+                            alt="Preview"
+                            className="max-w-full h-48 object-cover rounded-lg border border-gray-300"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

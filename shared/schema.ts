@@ -15,6 +15,7 @@ export const entries = pgTable("entries", {
   excerpt: text("excerpt").notNull(),
   category: text("category").notNull(),
   date: text("date").notNull(),
+  image: text("image"), // Optional image field
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

@@ -94,7 +94,10 @@ The application follows a modern full-stack architecture with clear separation b
 
 ```
 Changelog:
-- June 26, 2025. Initial setup
+- June 26, 2025. Initial setup - Created basic journal website with timeline layout
+- June 26, 2025. Added image upload functionality for entries
+- June 26, 2025. Implemented removable timeline feature with delete buttons
+- June 26, 2025. Fixed navigation component and entry display with image support
 ```
 
 ## User Preferences

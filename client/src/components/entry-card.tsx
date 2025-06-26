@@ -1,9 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash2 } from "lucide-react";
 import { formatDate, getReadingTime, getCategoryColor } from "@/lib/utils";
 import { Link } from "wouter";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Entry } from "@shared/schema";
 
 interface EntryCardProps {
@@ -13,6 +16,35 @@ interface EntryCardProps {
 
 export default function EntryCard({ entry, isLeft = false }: EntryCardProps) {
   const readingTime = getReadingTime(entry.content);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const deleteEntryMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await apiRequest("DELETE", `/api/entries/${id}`);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/entries"] });
+      toast({
+        title: "Success",
+        description: "Entry deleted successfully!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete entry. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDelete = () => {
+    if (confirm("Are you sure you want to delete this entry? This action cannot be undone.")) {
+      deleteEntryMutation.mutate(entry.id);
+    }
+  };
   
   return (
     <div className="relative mb-12 ml-8 md:ml-0">
@@ -25,11 +57,33 @@ export default function EntryCard({ entry, isLeft = false }: EntryCardProps) {
           <Card className="bg-white hover:shadow-md transition-shadow border border-gray-100">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <Badge className={getCategoryColor(entry.category)}>
-                  {entry.category}
-                </Badge>
-                <span className="text-sm text-gray-500">{formatDate(entry.date)}</span>
+                <div className="flex items-center space-x-2">
+                  <Badge className={getCategoryColor(entry.category)}>
+                    {entry.category}
+                  </Badge>
+                  <span className="text-sm text-gray-500">{formatDate(entry.date)}</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleDelete}
+                  disabled={deleteEntryMutation.isPending}
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
+              
+              {/* Image Display */}
+              {entry.image && (
+                <div className="mb-4">
+                  <img
+                    src={entry.image}
+                    alt={entry.title}
+                    className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+              )}
               
               <h3 className="text-xl font-serif font-semibold text-primary-custom mb-3">
                 {entry.title}
