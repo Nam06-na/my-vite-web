@@ -44,18 +44,16 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createEntry(insertEntry: InsertEntry): Promise<Entry> {
-    const entryToInsert = {
-      title: insertEntry.title,
-      content: insertEntry.content,
-      excerpt: insertEntry.excerpt,
-      category: insertEntry.category,
-      date: insertEntry.date,
-      image: insertEntry.image || null
-    };
-    
     const [entry] = await db
       .insert(entries)
-      .values(entryToInsert)
+      .values({
+        title: insertEntry.title,
+        content: insertEntry.content,
+        excerpt: insertEntry.excerpt || "",
+        category: insertEntry.category,
+        date: insertEntry.date,
+        image: insertEntry.image || null
+      })
       .returning();
     return entry;
   }
