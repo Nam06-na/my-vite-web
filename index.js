@@ -368,7 +368,6 @@ var vite_config_default = defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    // Sửa đúng ở đây
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true
   },
